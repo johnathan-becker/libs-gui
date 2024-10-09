@@ -6,6 +6,14 @@
 #include <AppKit/NSApplication.h>
 #include "GSCodingFlags.h"
 
+void print_binary(uint32_t value) {
+    for (int i = 31; i >= 0; i--) {
+        printf("%d", (value >> i) & 1);
+        if (i % 8 == 0) printf(" ");
+    }
+    printf("\n");
+}
+
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
@@ -29,6 +37,8 @@ int main()
   mask.flags.disabled = 0;
   mask.flags.editable = 1;
 
+  print_binary(mask.value);
+
 #if GS_WORDS_BIGENDIAN == 1
   pass(mask.value == 0b10000011000000000000000000000000, "mask.flags translates to mask.value");
 #else
@@ -43,6 +53,8 @@ mask.flags = (GSCellFlags){0};
 #else
   mask.value = 0b00000000000000000000000000001101;
 #endif
+
+print_binary(mask.value);
 
 pass(mask.flags.state == 1, "state is correctly set");
 pass(mask.flags.highlighted == 1, "highlighted is correctly set");
