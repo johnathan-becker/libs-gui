@@ -24,16 +24,17 @@ int main()
   }
   NS_ENDHANDLER
   // first make sure flags translate to values
-  mask.flags.state = YES;
-  mask.flags.highlighted = YES;
-  mask.flags.disabled = NO;
-  mask.flags.editable = YES;
+  mask.flags.state = 1;
+  mask.flags.highlighted = 1;
+  mask.flags.disabled = 0;
+  mask.flags.editable = 1;
 
 #if GS_WORDS_BIGENDIAN == 1
   pass(mask.value == 0b10000011000000000000000000000000, "mask.flags translates to mask.value");
 #else
   pass(mask.value == 0b00000000000000000000000000001101, "mask.flags translates to mask.value");
 #endif
+mask = { { 0 } };
 // now make sure values translate to flags
 #if GS_WORDS_BIGENDIAN == 1
   mask.value = 0b10000011000000000000000000000000;
@@ -41,10 +42,10 @@ int main()
   mask.value = 0b00000000000000000000000000001101;
 #endif
 
-pass(mask.flags.state == YES, "state is correctly set");
-pass(mask.flags.highlighted == YES, "highlighted is correctly set");
-pass(mask.flags.disabled == NO, "disabled is correctly set");
-pass(mask.flags.editable == YES, "editable is correctly set");
+pass(mask.flags.state == 1, "state is correctly set");
+pass(mask.flags.highlighted == 1, "highlighted is correctly set");
+pass(mask.flags.disabled == 0, "disabled is correctly set");
+pass(mask.flags.editable == 1, "editable is correctly set");
  
 END_SET("GSCodingFlags GNUstep CellFlags Union")
 
