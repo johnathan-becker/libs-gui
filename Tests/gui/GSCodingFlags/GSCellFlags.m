@@ -8,10 +8,10 @@
 
 void print_binary(uint32_t value) {
     for (int i = 31; i >= 0; i--) {
-        printf("%d", (value >> i) & 1);
+        NSLog("%d", (value >> i) & 1);
         if (i % 8 == 0) printf(" ");
     }
-    printf("\n");
+    NSLog("\n");
 }
 
 int main()
