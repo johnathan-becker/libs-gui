@@ -33,9 +33,9 @@ int main()
     mask.flags.truncateLastLine = 1;
 
 #if GS_WORDS_BIGENDIAN == 1
-    pass(mask.value == 0b00010010 00000000 00011100 00001001, "mask.flags translates to mask.value");
+    pass(mask.value == 0b00010010000000000001110000001001, "mask.flags translates to mask.value");
 #else
-    pass(mask.value == 0b10010000 00111000 00000000 01001000, "mask.flags translates to mask.value: %s", mask_Value);
+    pass(mask.value == 0b1001000000111000 0000000001001000, "mask.flags translates to mask.value");
 #endif
     // reset mask
     mask.value = 0;
