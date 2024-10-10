@@ -58,7 +58,7 @@ int main()
 #if GS_WORDS_BIGENDIAN == 1
     pass(mask.value == 0b00000001001000000000110100000001, "mask.flags translates to mask.value");
 #else
-    pass(mask.value == 0b00000001001000000000110100000001, "mask.flags translates to mask.value");
+    pass(mask.value == 0b00000001001000000000110100000001, "mask.flags translates to mask.value: %s", mask_Value);
 #endif
     // reset mask
     mask.value = 0;
