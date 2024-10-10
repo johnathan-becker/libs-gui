@@ -8,10 +8,10 @@
 
 void print_binary(uint32_t value) {
     for (int i = 31; i >= 0; i--) {
-        fprintf("%d", (value >> i) & 1);
-        if (i % 8 == 0) printf(" ");
+        fprintf(stderr, "%d", (value >> i) & 1);
+        if (i % 8 == 0) fprintf(stderr, " ");
     }
-    fprintf("\n");
+    fprintf(stderr, "\n");
 }
 
 int main()
