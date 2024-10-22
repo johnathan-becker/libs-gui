@@ -597,7 +597,7 @@ static NSImage *_pbc_image[5];
       [self selectItemAtIndex: i];
       [self synchronizeTitleAndSelectedItem];
     } else {
-      NSLog(@"Not responding to selector: %ld!!!!!", intValue);
+      NSLog(@"Not responding to selector!!!!!");
     }
 }
 
