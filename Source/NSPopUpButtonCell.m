@@ -592,9 +592,12 @@ static NSImage *_pbc_image[5];
   if ([object respondsToSelector: @selector(intValue)])
     {
       int i = [object intValue];
+      NSLog(@"Responding to selector at index: %ld", i);
         
       [self selectItemAtIndex: i];
       [self synchronizeTitleAndSelectedItem];
+    } else {
+      NSLog(@"Not responding to selector: %ld!!!!!", intValue);
     }
 }
 
