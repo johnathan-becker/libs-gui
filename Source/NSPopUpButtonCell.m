@@ -667,6 +667,30 @@ static NSImage *_pbc_image[5];
 
 - (void) selectItem: (id <NSMenuItem>)item
 {
+  NSLog(@"We are about to select this item");
+  NSLog(@"[DEBUG] Processing NSMenuItem:");
+  NSLog(@"[DEBUG] - Title: %@", [item title]);
+  NSLog(@"[DEBUG] - Enabled: %@", [item isEnabled] ? @"YES" : @"NO");
+  NSLog(@"[DEBUG] - State: %@", ([item state] == NSOnState) ? @"On" : ([item state] == NSOffState ? @"Off" : @"Mixed"));
+  NSLog(@"[DEBUG] - Has Submenu: %@", [item hasSubmenu] ? @"YES" : @"NO");
+
+  if ([item hasSubmenu]) {
+      NSLog(@"[DEBUG] - Submenu: %@", [[item submenu] title]);
+  }
+
+  NSLog(@"[DEBUG] - Key Equivalent: %@", [item keyEquivalent]);
+  NSLog(@"[DEBUG] - Key Equivalent Modifier Mask: %lu", (unsigned long)[item keyEquivalentModifierMask]);
+
+  NSLog(@"[DEBUG] - Tag: %ld", (long)[item tag]);
+  NSLog(@"[DEBUG] - ToolTip: %@", [item toolTip]);
+  NSLog(@"[DEBUG] - Represented Object: %@", [item representedObject]);
+
+  if ([item image] != nil) {
+      NSLog(@"[DEBUG] - Image: %@", [[item image] description]);
+  }
+
+  NSLog(@"[DEBUG] - Alternate: %@", [item isAlternate] ? @"YES" : @"NO");
+  NSLog(@"[DEBUG] - Indentation Level: %ld", (long)[item indentationLevel]);
   id<NSMenuItem> oldSelectedItem = _selectedItem;
 
   if (_selectedItem == item)
