@@ -803,7 +803,7 @@ static NSImage *_pbc_image[5];
         }
       else
         {
-          NSLog(@"We have items in menu so we are setting itemAtIndex 0 to title(pulldown): %@", title);
+          NSLog(@"We have items in menu so we are setting itemAtIndex 0 to title(pulldown): %@", aString);
           anItem = [_menu itemAtIndex: 0];
           [anItem setTitle: aString];
         }
@@ -813,7 +813,7 @@ static NSImage *_pbc_image[5];
       anItem = [_menu itemWithTitle: aString];
       if (anItem == nil)
         {
-          NSLog(@"We are adding a title with (nopulldown) for title: %@", title);
+          NSLog(@"We are adding a title with (nopulldown) for title: %@", aString);
           [self addItemWithTitle: aString];
           anItem = [_menu itemWithTitle: aString];
         }
