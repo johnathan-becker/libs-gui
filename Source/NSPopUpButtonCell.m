@@ -405,6 +405,7 @@ static NSImage *_pbc_image[5];
  */
 - (void) insertItemWithTitle: (NSString *)title atIndex: (NSInteger)index
 {
+  NSLog(@"Adding title %@at index %ld", title, index);
   id <NSMenuItem> anItem;
   NSInteger i, count;
   
@@ -442,6 +443,7 @@ static NSImage *_pbc_image[5];
   // Select the new item if there isn't any selection.
   if (_selectedItem == nil)
     {
+      NSLog(@"This item is being set as selected item because selcted item is nil");
       [self selectItem: anItem];
     }
 }
@@ -743,6 +745,7 @@ static NSImage *_pbc_image[5];
   else
     anItem = [self itemAtIndex: index];
 
+  NSLog(@"About to select item at index: %ld", index);
   [self selectItem: anItem];
 }
 
@@ -750,6 +753,7 @@ static NSImage *_pbc_image[5];
 {
   id <NSMenuItem> anItem = [self itemWithTitle: title];
 
+  NSLog(@"About to select item with title: %@", title);
   [self selectItem: anItem];
 }
 
@@ -781,6 +785,7 @@ static NSImage *_pbc_image[5];
 
 - (void) setTitle: (NSString *)aString
 {
+  NSLog(@"About to setTitle");
   id <NSMenuItem> anItem;
 
   if (!_pbcFlags.usesItemFromMenu)
@@ -793,10 +798,12 @@ static NSImage *_pbc_image[5];
     {
       if ([_menu numberOfItems] == 0)
         {
+          NSLog(@"Number of items in menu (pulldown) is 0");
           anItem = nil;
         }
       else
         {
+          NSLog(@"We have items in menu so we are setting itemAtIndex 0 to title(pulldown): %@", title);
           anItem = [_menu itemAtIndex: 0];
           [anItem setTitle: aString];
         }
@@ -806,10 +813,12 @@ static NSImage *_pbc_image[5];
       anItem = [_menu itemWithTitle: aString];
       if (anItem == nil)
         {
+          NSLog(@"We are adding a title with (nopulldown) for title: %@", title);
           [self addItemWithTitle: aString];
           anItem = [_menu itemWithTitle: aString];
         }
     }
+    NSLog(@"At this point we are setting select an item: %@", anItem);
   [self selectItem: anItem];
 }
 
