@@ -1035,57 +1035,67 @@ static NSImage *_pbc_image[5];
     }
 }
 
-- (BOOL) trackMouse: (NSEvent *)theEvent
-             inRect: (NSRect)cellFrame
-             ofView: (NSView *)controlView
-       untilMouseUp: (BOOL)untilMouseUp
+- (BOOL)trackMouse:(NSEvent *)theEvent
+            inRect:(NSRect)cellFrame
+            ofView:(NSView *)controlView
+      untilMouseUp:(BOOL)untilMouseUp
 {
-  NSMenuView *mr = [[self menu] menuRepresentation];
-  NSWindow   *menuWindow = [mr window];
-  NSEvent    *e;
-  NSPoint    p;
+    NSLog(@"[DEBUG] trackMouse: Started with event: %@, inRect: %@, ofView: %@, untilMouseUp: %d", theEvent, NSStringFromRect(cellFrame), controlView, untilMouseUp);
+    
+    NSMenuView *mr = [[self menu] menuRepresentation];
+    NSWindow *menuWindow = [mr window];
+    NSEvent *e;
+    NSPoint p;
 
-  if ([self isEnabled] == NO)
-    return NO;
-
-  if ([[self menu] numberOfItems] == 0)
-    {
-      NSBeep ();
-      return NO;
+    if ([self isEnabled] == NO) {
+        NSLog(@"[DEBUG] trackMouse: The menu item is disabled. Returning NO.");
+        return NO;
     }
 
-  // Attach the popUp
-  [self attachPopUpWithFrame: cellFrame
-                      inView: controlView];
-
-  p = [[controlView window] convertBaseToScreen: [theEvent locationInWindow]];
-  p = [menuWindow convertScreenToBase: p];
-  
-  // Process events; we start menu events processing by converting 
-  // this event to the menu window, and sending it there. 
-  e = [NSEvent mouseEventWithType: [theEvent type]
-               location: p
-               modifierFlags: [theEvent modifierFlags]
-               timestamp: [theEvent timestamp]
-               windowNumber: [menuWindow windowNumber]
-               context: [theEvent context]
-               eventNumber: [theEvent eventNumber]
-               clickCount: [theEvent clickCount] 
-               pressure: [theEvent pressure]];
-
-  // Send the event directly to the popup window, as it may not be located
-  // at the event position.
-  [mr mouseDown: e];
-  
-  // End of mouse tracking here -- dismiss popup
-  // No synchronization needed here
-  if ([[_menu window] isVisible])
-    {
-      [self dismissPopUp];
-      return NO;
+    if ([[self menu] numberOfItems] == 0) {
+        NSLog(@"[DEBUG] trackMouse: The menu has no items. Beeping and returning NO.");
+        NSBeep();
+        return NO;
     }
 
-  return YES;
+    // Attach the popUp
+    NSLog(@"[DEBUG] trackMouse: Attaching popup with frame: %@ in view: %@", NSStringFromRect(cellFrame), controlView);
+    [self attachPopUpWithFrame:cellFrame inView:controlView];
+
+    p = [[controlView window] convertBaseToScreen:[theEvent locationInWindow]];
+    NSLog(@"[DEBUG] trackMouse: Converted base point to screen: %@", NSStringFromPoint(p));
+    
+    p = [menuWindow convertScreenToBase:p];
+    NSLog(@"[DEBUG] trackMouse: Converted screen point to base for menu window: %@", NSStringFromPoint(p));
+
+    // Process events; we start menu events processing by converting 
+    // this event to the menu window, and sending it there. 
+    e = [NSEvent mouseEventWithType:[theEvent type]
+                           location:p
+                      modifierFlags:[theEvent modifierFlags]
+                          timestamp:[theEvent timestamp]
+                       windowNumber:[menuWindow windowNumber]
+                            context:[theEvent context]
+                        eventNumber:[theEvent eventNumber]
+                         clickCount:[theEvent clickCount] 
+                          pressure:[theEvent pressure]];
+    NSLog(@"[DEBUG] trackMouse: Created new mouse event for menu window: %@", e);
+
+    // Send the event directly to the popup window, as it may not be located
+    // at the event position.
+    NSLog(@"[DEBUG] trackMouse: Sending mouseDown event to menu representation.");
+    [mr mouseDown:e];
+  
+    // End of mouse tracking here -- dismiss popup
+    if ([[_menu window] isVisible]) {
+        NSLog(@"[DEBUG] trackMouse: Dismissing popup as the menu window is still visible.");
+        [self dismissPopUp];
+        NSLog(@"[DEBUG] trackMouse: Pop-up dismissed. Returning NO.");
+        return NO;
+    }
+
+    NSLog(@"[DEBUG] trackMouse: Pop-up not visible. Returning YES.");
+    return YES;
 }
 
 /**
