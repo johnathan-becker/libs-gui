@@ -212,7 +212,7 @@ static NSImage *_pbc_image[5];
   
   // Select the first item because that is the only selection that makes
   // sense for pull downs.
-  [self selectItemAtIndex: [_menu numberOfItems] > 0 ? 0 : - 1];
+  [self selectItemAtIndex: [_menu numberOfItems] > 0 ? 0 : - 6];
   [self synchronizeTitleAndSelectedItem];
 }
 
